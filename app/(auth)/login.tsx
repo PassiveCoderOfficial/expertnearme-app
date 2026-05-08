@@ -32,8 +32,8 @@ export default function LoginScreen() {
 
   return (
     <SafeAreaView style={s.safe}>
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : undefined} style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={s.container} keyboardShouldPersistTaps="handled">
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={s.container} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
           <View style={s.logo}>
             <View style={s.logoMark}><Text style={s.logoLetter}>E</Text></View>
             <Text style={s.brand}><Text style={{ color: COLORS.orange }}>Expert</Text>Near.Me</Text>
