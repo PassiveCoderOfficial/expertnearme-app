@@ -21,8 +21,9 @@ export default function CountrySelectScreen() {
     fetch(`${API_BASE}/api/countries`)
       .then((r) => r.json())
       .then((d) => {
-        if (d.countries && d.countries.length > 0) {
-          setCountries(d.countries);
+        const list = Array.isArray(d) ? d : d.countries;
+        if (list && list.length > 0) {
+          setCountries(list);
         } else {
           setError(true);
         }
