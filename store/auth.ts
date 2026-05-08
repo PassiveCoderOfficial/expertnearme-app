@@ -1,6 +1,5 @@
 import { create } from "zustand";
-import * as SecureStore from "expo-secure-store";
-import { api } from "@/lib/api";
+import { storage } from "@/lib/storage";
 import { API_BASE } from "@/constants";
 
 interface User {
@@ -34,7 +33,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   hydrated: false,
 
   init: async () => {
-    const token = await SecureStore.getItemAsync("token");
+    const token = await storage.getItem("token");
     if (!token) {
       set({ loading: false, hydrated: true });
       return;
@@ -47,7 +46,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   refresh: async () => {
     set({ loading: true });
     try {
-      const token = await SecureStore.getItemAsync("token");
+      const token = await storage.getItem("token");
       if (!token) { set({ user: null, token: null, loading: false }); return; }
 
       const res = await fetch(`${API_BASE}/api/auth/me`, {
@@ -57,7 +56,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       if (data.ok) {
         set({ user: data.user, token, loading: false });
       } else {
-        await SecureStore.deleteItemAsync("token");
+        await storage.deleteItem("token");
         set({ user: null, token: null, loading: false });
       }
     } catch {
@@ -74,7 +73,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       });
       const data = await res.json();
       if (data.ok && data.token) {
-        await SecureStore.setItemAsync("token", data.token);
+        await storage.setItem("token", data.token);
         set({ token: data.token });
         await get().refresh();
         return { ok: true };
@@ -106,12 +105,12 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   logout: async () => {
-    await SecureStore.deleteItemAsync("token");
+    await storage.deleteItem("token");
     set({ user: null, token: null });
   },
 
   switchRole: async (role) => {
-    const token = await SecureStore.getItemAsync("token");
+    const token = await storage.getItem("token");
     if (!token) return false;
     try {
       const res = await fetch(`${API_BASE}/api/auth/switch-role`, {
