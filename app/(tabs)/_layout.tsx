@@ -25,6 +25,10 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen
+        name="dashboard"
+        options={{ title: "Dashboard", tabBarIcon: ({ color }) => <TabBarEmoji emoji="⚡" color={color} /> }}
+      />
+      <Tabs.Screen
         name="index"
         options={{ title: "Home", tabBarIcon: ({ color }) => <TabBarEmoji emoji="🏠" color={color} /> }}
       />
@@ -39,10 +43,6 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="messages"
         options={{ title: "Messages", tabBarIcon: ({ color }) => <TabBarEmoji emoji="💬" color={color} /> }}
-      />
-      <Tabs.Screen
-        name="dashboard"
-        options={{ title: "Dashboard", tabBarIcon: ({ color }) => <TabBarEmoji emoji="⚡" color={color} /> }}
       />
     </Tabs>
   );
