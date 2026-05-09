@@ -49,7 +49,7 @@ function RootNav() {
       return;
     }
     if (onboardingDone && user && (inAuth || inOnboarding)) {
-      router.replace("/(tabs)");
+      router.replace("/(tabs)/dashboard");
       return;
     }
   }, [authHydrated, onboardingHydrated, user, onboardingDone]);

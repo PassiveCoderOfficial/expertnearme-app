@@ -24,7 +24,7 @@ export default function LoginScreen() {
     const result = await login(email, password);
     setLoading(false);
     if (result.ok) {
-      router.replace("/(tabs)");
+      router.replace("/(tabs)/dashboard");
     } else {
       setError(result.error || "Login failed");
     }
